@@ -61,7 +61,7 @@ ISR( INT7_vect )
 
 void adcInit()
 {
-	ADMUX  = 0b11100001;
+	ADMUX  = 0b11000001;
 	ADCSRA = 0b11000110;
 }
 
@@ -85,9 +85,9 @@ int main( void )
 	char *word = "WARMTE";
 	char *tempWord;
 	
-	int temp = ADCH;
+	int temp = ADCL;
 	int lastTemp = temp;
-	PORTB = ADCH;
+	PORTB = ADCL;
 	
 	if(temp > 12)
 	{
