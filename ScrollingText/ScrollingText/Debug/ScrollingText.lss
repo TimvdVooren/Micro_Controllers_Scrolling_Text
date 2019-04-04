@@ -23,13 +23,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  0000032c  00000000  00000000  00003ba0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00008065  00000000  00000000  00003ecc  2**0
+ 10 .debug_str    000080e4  00000000  00000000  00003ecc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000008d9  00000000  00000000  0000bf31  2**0
+ 11 .debug_loc    000008d9  00000000  00000000  0000bfb0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000001c0  00000000  00000000  0000c80a  2**0
+ 12 .debug_ranges 000001c0  00000000  00000000  0000c889  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  00002f03  00000000  00000000  0000c9ca  2**0
+ 13 .debug_macro  00002f03  00000000  00000000  0000ca49  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -149,12 +149,6 @@ Disassembly of section .text:
   c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
 
 000000c8 <startDotmatrix>:
-		writeToDotmatrix(i * 2);
-		writeToDotmatrix(letr.structure[i]);
-	}
-	
-	stopDotmatrix();
-}
   c8:	84 ea       	ldi	r24, 0xA4	; 164
   ca:	80 93 74 00 	sts	0x0074, r24	; 0x800074 <__TEXT_REGION_LENGTH__+0x7e0074>
   ce:	e4 e7       	ldi	r30, 0x74	; 116
@@ -597,20 +591,11 @@ Disassembly of section .text:
  464:	08 95       	ret
 
 00000466 <setScrollingSpeed>:
-
-void setScrollingSpeed(int s)
-{
-	scrollingSpeed = s;
  466:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_start+0x1>
  46a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
  46e:	08 95       	ret
 
 00000470 <getScrollingSpeed>:
-}
-
-int getScrollingSpeed(void)
-{
-	return scrollingSpeed;
  470:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
  474:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_start+0x1>
  478:	08 95       	ret
@@ -878,8 +863,8 @@ ISR( INT7_vect )
 
 void adcInit()
 {
-	ADMUX  = 0b11100001;
- 60c:	81 ee       	ldi	r24, 0xE1	; 225
+	ADMUX  = 0b11000001;
+ 60c:	81 ec       	ldi	r24, 0xC1	; 193
  60e:	87 b9       	out	0x07, r24	; 7
 	ADCSRA = 0b11000110;
  610:	86 ec       	ldi	r24, 0xC6	; 198
@@ -920,15 +905,15 @@ int main( void )
  632:	5e dd       	rcall	.-1348   	; 0xf0 <dotmatrixInit>
 	clearDisplay();
  634:	bd dd       	rcall	.-1158   	; 0x1b0 <clearDisplay>
- 636:	85 b1       	in	r24, 0x05	; 5
+ 636:	84 b1       	in	r24, 0x04	; 4
 	
 	char *word = "WARMTE";
 	char *tempWord;
 	
-	int temp = ADCH;
- 638:	95 b1       	in	r25, 0x05	; 5
+	int temp = ADCL;
+ 638:	94 b1       	in	r25, 0x04	; 4
 	int lastTemp = temp;
-	PORTB = ADCH;
+	PORTB = ADCL;
  63a:	98 bb       	out	0x18, r25	; 24
  63c:	90 e0       	ldi	r25, 0x00	; 0
 	

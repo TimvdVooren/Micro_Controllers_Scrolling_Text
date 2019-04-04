@@ -61,7 +61,10 @@ ISR( INT7_vect )
 
 void adcInit()
 {
-	ADMUX  = 0b11100001;
+	//de zesde bit wordt op 0 gezet zodat de laagste 8 bits van de ADC kunnen worden uitgelezen met ADCL
+	//van de eerste vijf bits wordt de eerste bit op 1 gezet zodat pin F1 verbonden is met de ADC
+	//de laatste twee bits worden op 1 gezet, dit stelt de voltage referentie in
+	ADMUX  = 0b11000001;
 	ADCSRA = 0b11000110;
 }
 
@@ -85,11 +88,13 @@ int main( void )
 	char *word = "WARMTE";
 	char *tempWord;
 	
-	int temp = ADCH;
-	int lastTemp = temp;
-	PORTB = ADCH;
+	//temp krijgt de waarde van ADCL, dit zijn de laagste acht bits die de ADC meet (ingesteld door de ADMUX in adcInit())
+	int temp = ADCL;
 	
-	if(temp > 12)
+	//PORTB krijgt ook de waarde van ADCL om te testen dat het correct werkt
+	PORTB = ADCL;
+	
+	if(temp > 45)
 	{
 		tempWord = word;
 		char *str = ">";
