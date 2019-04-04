@@ -61,8 +61,8 @@ ISR( INT7_vect )
 
 void adcInit()
 {
-	//de zesde bit wordt op 0 gezet zodat de laagste 8 bits van de ADC kunnen worden uitgelezen met ADCL
 	//van de eerste vijf bits wordt de eerste bit op 1 gezet zodat pin F1 verbonden is met de ADC
+	//de zesde bit wordt op 0 gezet zodat de laagste 8 bits van de ADC kunnen worden uitgelezen met ADCL
 	//de laatste twee bits worden op 1 gezet, dit stelt de voltage referentie in
 	ADMUX  = 0b11000001;
 	ADCSRA = 0b11000110;
