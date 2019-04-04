@@ -89,7 +89,7 @@ int main( void )
 	int lastTemp = temp;
 	PORTB = ADCL;
 	
-	if(temp > 12)
+	if(temp > 45)
 	{
 		tempWord = word;
 		char *str = ">";
